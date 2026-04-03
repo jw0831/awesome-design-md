@@ -23,10 +23,7 @@
 </div>
 </div>
 
-
-
-
-# Awesome Design MD
+# Awesome DESIGN.md
 
 Copy a DESIGN.md into your project, tell your AI agent "build me a page that looks like this" and get pixel-perfect UI that actually matches.
 
@@ -75,6 +72,12 @@ Each site includes:
 
 1. Copy a site's `DESIGN.md` into your project root
 2. Tell your AI agent to use it.
+
+
+## Request a DESIGN.md
+
+[Open a GitHub issue with this template](https://github.com/VoltAgent/awesome-design-md/issues/new?template=design-md-request.yml) to request a DESIGN.md generation for a website.
+
 
 ## Collection
 
@@ -154,9 +157,8 @@ Each site includes:
 
 ## Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- [**Request a site**](https://github.com/VoltAgent/awesome-design-md/issues): Open an issue with the URL
 - **Improve existing files**: Fix wrong colors, missing tokens, weak descriptions
 - **Report issues**: Let us know if something looks off
 
