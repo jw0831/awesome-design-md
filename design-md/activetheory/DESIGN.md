@@ -6,19 +6,32 @@ Active Theory's website is a full-screen WebGL 3D experience that treats the bro
 
 The typography uses NBArchitektStd — a monospaced, industrial, architect-blueprint typeface loaded in three weights (Light 300, Regular 400, Bold 700). ALL text is uppercase with generous letter-spacing, creating a terminal/command-line aesthetic that feels like interfacing with a high-tech system. The monospaced character of NBArchitekt means every character occupies equal width, reinforcing the technical, engineered feel — text looks plotted rather than typeset.
 
-What makes Active Theory distinctive is its total rejection of traditional web design. There are no cards (in the DOM sense), no grids, no backgrounds, no borders, no shadows — everything exists in 3D space. Project thumbnails float as rounded-corner planes in a 3D carousel, the navigation is a floating pill with a frosted-glass effect, and category links use an arrow prefix (`->`) like terminal commands. The "Ask me anything..." input field has a thin border with rounded corners, sitting over the 3D scene. The entire experience is scroll-driven, with the camera moving through a 3D environment as the user scrolls — from a hero scene with a metallic logo and particles, through an underwater-like transition zone, past the "CREATIVE DIGITAL EXPERIENCES" text wall, and into the work gallery.
+What makes Active Theory distinctive is its total rejection of traditional web design. There are no cards (in the DOM sense), no grids, no backgrounds, no borders, no shadows — everything exists in 3D space. Project thumbnails float as rounded-corner planes in a 3D carousel, the navigation is a floating pill with a frosted-glass effect, and category links use an arrow prefix (`->`) like terminal commands. The "Ask me anything..." input field has a thin border with rounded corners, sitting over the 3D scene.
+
+The centerpiece of the scroll experience is a **3D iridescent spine/vertebrae structure** — a column of holographic, organic bone-like forms rendered with PBR metallic materials and chromatic aberration. As the user scrolls, this spine rotates and transforms along its vertical axis, acting as the central visual thread that connects all sections. The camera orbits and descends around it, revealing content at each stage: the metallic AT logo nestled within the spine's rings at the top, particles erupting around the vertebrae as the camera descends, the spine unwinding into the underwater jellyfish zone, and finally the spine's lower body cores transitioning into the "CREATIVE DIGITAL EXPERIENCES" text wall. The spine is not decorative — it IS the scroll timeline, and its rotation gives the user a physical sense of progressing through a spatial narrative.
+
+The scroll-driven scene flow is:
+1. **Hero** — Metallic AT logo with concentric rings, spine emerging below, green-gold particles, "SCROLL DOWN" indicator
+2. **Descent** — Camera descends along the spine as vertebrae rotate; particles shift from green-gold to purple-white; jellyfish float in the periphery
+3. **BodyCores / About** — Spine's lower structure fills the frame as the camera pushes through; "CREATIVE DIGITAL EXPERIENCES" 3D text appears left-aligned; "FOUNDED IN 2012" and company description appear right-aligned
+4. **Work Gallery** — Spine recedes as 3D project cards fan out in a perspective carousel; category navigation and AI input appear as HUD overlays
+5. **The Lab** — "// THE LAB ->" section — "our home for innovation, where prototypes turn into production projects"
+
+Before any of this loads, the site shows a **custom loading indicator**: a circle filled with diagonal slash characters (`/`) that progressively fills, with a centered percentage number (e.g., `/75`). This loading screen itself is a design element — monospaced slashes forming a circular mask, reinforcing the architect/terminal aesthetic.
 
 **Key Characteristics:**
 - Pure black void (`#000000`) with WebGL-rendered 3D content — zero traditional layout
 - NBArchitektStd — monospaced architect-blueprint typeface, all uppercase
+- **Scroll-driven 3D spine/vertebrae** — iridescent organic structure that rotates as the central visual axis connecting all scenes
 - Iridescent, holographic 3D objects with chromatic aberration and PBR materials
-- Floating particle systems (green-gold and purple-white palettes)
+- Floating particle systems (green-gold and purple-white palettes) erupting around the spine
 - 3D project card carousel with rounded-corner planes in perspective
 - Frosted-glass pill navigation with glow effect
 - Terminal-style category links with `->` arrow prefix
-- Scroll-driven 3D camera movement through scenes
+- Scroll-driven 3D camera movement orbiting the spine through scenes
 - Purple/violet accent for interactive category links
 - Ambient music player integrated into the experience
+- Slash-pattern circular loading indicator with percentage counter
 
 ## 2. Color Palette & Roles
 
@@ -140,6 +153,31 @@ What makes Active Theory distinctive is its total rejection of traditional web d
 - Position: Center-top of viewport
 - Animation: subtle fade pulse
 
+### Loading Indicator
+
+**Slash-Pattern Circular Progress**
+- Shape: Circle (~120px diameter) filled with diagonal slash characters (`/`)
+- Pattern: Monospaced `/` characters arranged in a grid, masked to a circle
+- Progress: Slashes fill progressively from top to bottom as assets load
+- Counter: Centered percentage number (e.g., `/75`) in NBArchitektStd Regular, ~16px
+- Color: `rgba(255, 255, 255, 0.4)` for slashes, white for percentage
+- Background: Pure void black, no container or border
+- The slash pattern reinforces the monospaced architect/terminal aesthetic even during load
+
+### 3D Spine / Vertebrae (Scroll-Driven Central Element)
+
+**Iridescent Organic Spine**
+- Structure: Vertical column of bone-like vertebrae forms, ~15-20 segments
+- Material: PBR metallic with iridescent/holographic surface — reflects chromatic aberration (red/blue channel splits)
+- Colors shift across the surface: teal, purple, copper, steel depending on viewing angle
+- Animation: Rotates on vertical axis as user scrolls — each scroll tick advances rotation
+- Role: Central visual axis — the spine IS the scroll timeline
+- The AT logo's concentric rings connect to the top of the spine
+- Particles erupt from and orbit around the spine segments
+- Camera orbits around the spine as it descends, creating a spiraling journey
+- At the BodyCores section, the lower vertebrae spread and the camera pushes through them
+- Geometry source: `assets/geometry/spine/` — multiple segment meshes composited
+
 ### Music Player
 
 **Ambient Audio Controls**
@@ -161,6 +199,17 @@ What makes Active Theory distinctive is its total rejection of traditional web d
 - **No grid.** The site has no 2D layout grid. Content exists in 3D space with camera-relative positioning.
 - Screen-space HUD elements (nav pill, category links, input) are positioned absolutely relative to viewport edges
 - The 3D scene itself is a continuous environment — no sections, no containers
+- **The spine IS the grid**: The 3D vertebrae column acts as a vertical axis around which all content is spatially organized. Scroll position maps to camera position along the spine.
+
+### Scene Flow (Scroll-Mapped Sections)
+| Scroll % | Scene | Central 3D Element | Content |
+|----------|-------|---------------------|---------|
+| 0% | Loading | Slash-circle progress | Percentage counter |
+| 0-15% | Hero | AT logo + spine top + rings | "SCROLL DOWN" indicator |
+| 15-40% | Descent | Spine rotates, particles shift | Jellyfish, particle transition |
+| 40-60% | About / BodyCores | Spine lower body, camera pushes through | "CREATIVE DIGITAL EXPERIENCES" + company info |
+| 60-85% | Work Gallery | Spine recedes, project cards appear | 3D card carousel + category nav + AI input |
+| 85-100% | The Lab / Footer | Lab environment | "// THE LAB ->" + contact |
 
 ### Whitespace Philosophy
 - **The void IS the design**: The pure black background is not empty space — it's the infinite void of a 3D environment. Traditional whitespace concepts don't apply because the "empty" areas are actually 3D depth filled with particles, distant objects, and atmospheric fog.
