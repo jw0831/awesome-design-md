@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Theory — Design System Preview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
+
+  :root {
+    --void-black: #000000;
+    --pure-white: #ffffff;
+    --violet-link: #b8a0d4;
+    --violet-hover: #d4c4e8;
+    --glow-cyan: #00e5ff;
+    --frosted-bg: rgba(255, 255, 255, 0.08);
+    --frosted-border: rgba(255, 255, 255, 0.2);
+    --input-border: rgba(180, 160, 210, 0.4);
+    --text-strong: rgba(255, 255, 255, 0.85);
+    --text-medium: rgba(255, 255, 255, 0.5);
+    --text-subtle: rgba(255, 255, 255, 0.3);
+    --font: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void-black);
+    color: var(--pure-white);
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.6;
+    padding: 60px;
+  }
+
+  h1 {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .section { margin-bottom: 80px; }
+
+  /* Color Swatches */
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .swatch {
+    width: 120px;
+  }
+  .swatch-color {
+    width: 120px;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 8px;
+  }
+  .swatch-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--pure-white);
+  }
+  .swatch-hex {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--text-medium);
+    margin-top: 2px;
+  }
+
+  /* Typography */
+  .type-row {
+    margin-bottom: 32px;
+  }
+  .type-meta {
+    font-size: 9px;
+    font-weight: 300;
+    color: var(--text-subtle);
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+  .type-display {
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    line-height: 0.95;
+  }
+  .type-section {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    line-height: 1.0;
+  }
+  .type-nav {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .type-category {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: var(--violet-link);
+  }
+  .type-body {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    color: var(--text-strong);
+    line-height: 1.6;
+  }
+  .type-input {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-medium);
+  }
+  .type-micro {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-medium);
+  }
+
+  /* Components */
+  .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--frosted-bg);
+    border: 1px solid var(--frosted-border);
+    border-radius: 40px;
+    padding: 14px 36px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.05);
+  }
+  .nav-pill span {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .nav-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--text-subtle);
+  }
+
+  .category-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .category-link {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: var(--violet-link);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .category-link:hover {
+    color: var(--violet-hover);
+  }
+
+  .chat-input {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--input-border);
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    min-width: 260px;
+  }
+
+  .scroll-indicator {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    text-align: center;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+
+  .project-card {
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  }
+  .project-title {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-text {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    line-height: 0.95;
+    margin-bottom: 40px;
+  }
+
+  .about-block {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+  }
+  .about-desc {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    color: var(--text-strong);
+    line-height: 1.7;
+    max-width: 400px;
+  }
+  .about-year {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    color: var(--pure-white);
+  }
+
+  /* Opacity Scale */
+  .opacity-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+  }
+  .opacity-sample {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+  }
+  .opacity-label {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--text-subtle);
+  }
+
+  .components-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .component-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .component-label {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-subtle);
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Active Theory - Design System Preview</h1>
+
+<!-- COLORS -->
+<div class="section">
+  <div class="section-title">Color Palette</div>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#000000;"></div>
+      <div class="swatch-label">Void Black</div>
+      <div class="swatch-hex">#000000</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#ffffff;"></div>
+      <div class="swatch-label">Pure White</div>
+      <div class="swatch-hex">#ffffff</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#b8a0d4;"></div>
+      <div class="swatch-label">Violet Link</div>
+      <div class="swatch-hex">#b8a0d4</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#d4c4e8;"></div>
+      <div class="swatch-label">Violet Hover</div>
+      <div class="swatch-hex">#d4c4e8</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#00e5ff;"></div>
+      <div class="swatch-label">Glow Cyan</div>
+      <div class="swatch-hex">#00e5ff</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3);"></div>
+      <div class="swatch-label">Frosted Glass</div>
+      <div class="swatch-hex">rgba(255,255,255,0.08)</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:rgba(180,160,210,0.4);"></div>
+      <div class="swatch-label">Input Border</div>
+      <div class="swatch-hex">rgba(180,160,210,0.4)</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8090a0;"></div>
+      <div class="swatch-label">Holographic</div>
+      <div class="swatch-hex">#8090a0</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#40e0d0;"></div>
+      <div class="swatch-label">Iridescent Teal</div>
+      <div class="swatch-hex">#40e0d0</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#80a040;"></div>
+      <div class="swatch-label">Particle Green</div>
+      <div class="swatch-hex">#80a040</div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#c080d0;"></div>
+      <div class="swatch-label">Particle Purple</div>
+      <div class="swatch-hex">#c080d0</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT OPACITY -->
+<div class="section">
+  <div class="section-title">Text Opacity Scale</div>
+  <div class="opacity-row">
+    <span class="opacity-sample" style="color: rgba(255,255,255,1.0);">Navigation Labels</span>
+    <span class="opacity-label">100% — Headings, Nav</span>
+  </div>
+  <div class="opacity-row">
+    <span class="opacity-sample" style="color: rgba(255,255,255,0.85);">Body Descriptions</span>
+    <span class="opacity-label">85% — Body, Descriptions</span>
+  </div>
+  <div class="opacity-row">
+    <span class="opacity-sample" style="color: rgba(255,255,255,0.5);">Scroll Indicator</span>
+    <span class="opacity-label">50% — Indicators, Muted</span>
+  </div>
+  <div class="opacity-row">
+    <span class="opacity-sample" style="color: rgba(255,255,255,0.3);">Placeholder Text</span>
+    <span class="opacity-label">30% — Placeholders, Disabled</span>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section">
+  <div class="section-title">Typography Scale</div>
+
+  <div class="type-row">
+    <div class="type-meta">Display Hero — 72px+ / Bold 700 / LS 8px</div>
+    <div class="type-display">Creative</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Section Heading — 36px / Bold 700 / LS 4px</div>
+    <div class="type-section">Digital Experiences</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Nav Label — 14px / Bold 700 / LS 2px</div>
+    <div class="type-nav">Work &nbsp;&nbsp;&mdash;&mdash;&mdash; &nbsp;&nbsp;Contact</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Category Link — 14px / Regular 400 / LS 1.5px / Violet</div>
+    <div class="type-category">-> Websites &nbsp;&nbsp; -> Installations &nbsp;&nbsp; -> XR / VR / AI</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body Description — 13px / Light 300 / LS 1.2px</div>
+    <div class="type-body">We blend story, art & technology as an in-house team of passionate makers</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Input Placeholder — 12px / Light 300 / LS 1.5px</div>
+    <div class="type-input">Ask me anything...</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Micro Label — 10px / Light 300 / LS 1.5px</div>
+    <div class="type-micro">2023 &nbsp;&middot;&nbsp; Installation &nbsp;&middot;&nbsp; Second Sky</div>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<div class="section">
+  <div class="section-title">Components</div>
+  <div class="components-grid">
+
+    <div>
+      <div class="component-label">Navigation Pill — Frosted Glass</div>
+      <div class="nav-pill">
+        <span>Work</span>
+        <div class="nav-divider"></div>
+        <span>Contact</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="component-label">Category Navigation — Terminal Style</div>
+      <div class="category-nav">
+        <a class="category-link">-> Websites</a>
+        <a class="category-link">-> Installations</a>
+        <a class="category-link">-> XR / VR / AI</a>
+        <a class="category-link">-> Multiplayer</a>
+        <a class="category-link">-> Games</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="component-label">AI Chat Input — Pill</div>
+      <div class="chat-input">Ask me anything...</div>
+    </div>
+
+    <div>
+      <div class="component-label">Scroll Indicator</div>
+      <div class="scroll-indicator">Scroll Down</div>
+    </div>
+
+    <div>
+      <div class="component-label">Project Card — 3D Plane (2D Approximation)</div>
+      <div class="project-card">
+        <div class="project-title">E.C.H.O.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LAYOUT EXAMPLE -->
+<div class="section">
+  <div class="section-title">Layout — About Section</div>
+  <div class="about-block">
+    <div class="hero-text">Creative<br>Digital<br>Experiences</div>
+    <div>
+      <div class="about-year">Founded in 2012</div>
+      <div class="about-desc">
+        We blend story, art & technology as an in-house team of passionate makers
+      </div>
+      <br>
+      <div class="about-desc">
+        Our industry-leading web toolset consistently delivers award-winning work through quality & performance
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

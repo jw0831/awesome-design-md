@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Theory — Design System Preview (Dark)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
+
+  :root {
+    --void-black: #000000;
+    --pure-white: #ffffff;
+    --violet-link: #b8a0d4;
+    --violet-hover: #d4c4e8;
+    --glow-cyan: #00e5ff;
+    --frosted-bg: rgba(255, 255, 255, 0.08);
+    --frosted-border: rgba(255, 255, 255, 0.2);
+    --input-border: rgba(180, 160, 210, 0.4);
+    --text-strong: rgba(255, 255, 255, 0.85);
+    --text-medium: rgba(255, 255, 255, 0.5);
+    --text-subtle: rgba(255, 255, 255, 0.3);
+    --font: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void-black);
+    color: var(--pure-white);
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.6;
+    padding: 60px;
+  }
+
+  h1 {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .section { margin-bottom: 80px; }
+
+  /* Swatches on dark surfaces */
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .swatch { width: 120px; }
+  .swatch-color {
+    width: 120px;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 8px;
+  }
+  .swatch-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+  .swatch-hex {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--text-medium);
+    margin-top: 2px;
+  }
+
+  /* Dark surface cards */
+  .surface-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .surface-card {
+    width: 240px;
+    height: 140px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    position: relative;
+  }
+  .surface-card-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+  .surface-card-meta {
+    font-size: 8px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--text-medium);
+    margin-top: 4px;
+  }
+
+  /* Full page mockup */
+  .mockup-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: var(--void-black);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Particle background simulation */
+  .mockup-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 40% 70%, rgba(128, 160, 64, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 40%, rgba(192, 128, 208, 0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 20%, rgba(0, 229, 255, 0.03) 0%, transparent 30%);
+  }
+
+  .mockup-nav {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--frosted-bg);
+    border: 1px solid var(--frosted-border);
+    border-radius: 40px;
+    padding: 10px 28px;
+    backdrop-filter: blur(12px);
+    z-index: 2;
+  }
+  .mockup-nav span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .mockup-nav-divider {
+    width: 30px;
+    height: 1px;
+    background: var(--text-subtle);
+  }
+
+  .mockup-scroll {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--text-medium);
+    z-index: 2;
+  }
+
+  .mockup-hero {
+    position: absolute;
+    bottom: 120px;
+    left: 60px;
+    z-index: 2;
+  }
+  .mockup-hero-text {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    line-height: 0.95;
+  }
+
+  .mockup-about {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    z-index: 2;
+    text-align: right;
+  }
+  .mockup-about-year {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  .mockup-about-desc {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 1.2px;
+    color: var(--text-strong);
+    line-height: 1.7;
+    max-width: 320px;
+  }
+
+  .mockup-categories {
+    position: absolute;
+    bottom: 140px;
+    left: 60px;
+    z-index: 2;
+    display: none;
+  }
+  .mockup-cat-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: var(--pure-white);
+  }
+  .mockup-cat-link {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: var(--violet-link);
+    margin-bottom: 5px;
+  }
+
+  /* Work page mockup */
+  .mockup-work {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: var(--void-black);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mockup-work::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(100, 60, 140, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 50%, rgba(0, 100, 120, 0.08) 0%, transparent 40%);
+  }
+
+  .mockup-card-carousel {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 1;
+  }
+  .mockup-card {
+    border-radius: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .mockup-card.side {
+    width: 160px;
+    height: 200px;
+    opacity: 0.4;
+    transform: perspective(800px) rotateY(15deg);
+  }
+  .mockup-card.side-right {
+    transform: perspective(800px) rotateY(-15deg);
+  }
+  .mockup-card.center {
+    width: 320px;
+    height: 240px;
+    opacity: 1;
+  }
+  .mockup-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    z-index: 1;
+  }
+  .mockup-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .mockup-work-nav {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--frosted-bg);
+    border: 1px solid var(--frosted-border);
+    border-radius: 40px;
+    padding: 8px 24px;
+    backdrop-filter: blur(12px);
+    z-index: 2;
+  }
+  .mockup-work-nav span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .mockup-work-cats {
+    position: absolute;
+    bottom: 80px;
+    left: 40px;
+    z-index: 2;
+  }
+  .mockup-work-cat-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .mockup-work-cat-link {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: var(--violet-link);
+    margin-bottom: 4px;
+  }
+  .mockup-work-input {
+    margin-top: 12px;
+    display: inline-flex;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--input-border);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-subtle);
+    font-family: var(--font);
+    text-transform: uppercase;
+  }
+
+  .component-label {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: var(--text-subtle);
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Active Theory - Design System Preview (Dark Surfaces)</h1>
+
+<!-- DARK SURFACES -->
+<div class="section">
+  <div class="section-title">Surface Hierarchy</div>
+  <div class="surface-grid">
+    <div class="surface-card" style="background: #000000; border: 1px solid rgba(255,255,255,0.1);">
+      <div class="surface-card-label">Void Black</div>
+      <div class="surface-card-meta">#000000 — Page Background</div>
+    </div>
+    <div class="surface-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+      <div class="surface-card-label">Near Void</div>
+      <div class="surface-card-meta">rgba(255,255,255,0.03) — Subtle Surface</div>
+    </div>
+    <div class="surface-card" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(180,160,210,0.4);">
+      <div class="surface-card-label">Input Surface</div>
+      <div class="surface-card-meta">rgba(255,255,255,0.05) — Input Fields</div>
+    </div>
+    <div class="surface-card" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(12px);">
+      <div class="surface-card-label">Frosted Glass</div>
+      <div class="surface-card-meta">rgba(255,255,255,0.08) — Navigation</div>
+    </div>
+  </div>
+</div>
+
+<!-- FROSTED GLASS VARIANTS -->
+<div class="section">
+  <div class="section-title">Frosted Glass Depth</div>
+  <div class="surface-grid">
+    <div class="surface-card" style="width: 200px; height: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 40px; justify-content: center; align-items: center; text-align: center;">
+      <div class="surface-card-label" style="font-size: 8px;">4% Opacity</div>
+    </div>
+    <div class="surface-card" style="width: 200px; height: 100px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(8px);">
+      <div class="surface-card-label" style="font-size: 8px;">8% Opacity + Blur</div>
+    </div>
+    <div class="surface-card" style="width: 200px; height: 100px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; justify-content: center; align-items: center; text-align: center; backdrop-filter: blur(12px);">
+      <div class="surface-card-label" style="font-size: 8px;">12% Opacity + Blur</div>
+    </div>
+  </div>
+</div>
+
+<!-- FULL PAGE MOCKUP — HOME -->
+<div class="section">
+  <div class="section-title">Page Mockup — Home</div>
+  <div class="mockup-container">
+    <div class="mockup-nav">
+      <span>Work</span>
+      <div class="mockup-nav-divider"></div>
+      <span>Contact</span>
+    </div>
+    <div class="mockup-scroll">Scroll Down</div>
+    <div class="mockup-hero">
+      <div class="mockup-hero-text">Creative<br>Digital<br>Experiences</div>
+    </div>
+    <div class="mockup-about">
+      <div class="mockup-about-year">Founded in 2012</div>
+      <div class="mockup-about-desc">We blend story, art & technology as an in-house team of passionate makers</div>
+      <br>
+      <div class="mockup-about-desc">Our industry-leading web toolset consistently delivers award-winning work through quality & performance</div>
+    </div>
+  </div>
+</div>
+
+<!-- FULL PAGE MOCKUP — WORK -->
+<div class="section">
+  <div class="section-title">Page Mockup — Work</div>
+  <div class="mockup-work">
+    <div class="mockup-work-nav">
+      <span>Work</span>
+      <div class="mockup-nav-divider"></div>
+      <span>Contact</span>
+    </div>
+
+    <div class="mockup-card-carousel">
+      <div class="mockup-card side" style="background: linear-gradient(135deg, #1a0a2e, #2a1a3e);">
+        <div class="mockup-card-title" style="font-size: 12px;">Nurture</div>
+      </div>
+      <div class="mockup-card center" style="background: linear-gradient(135deg, #0a1a2e, #16213e, #0f3460);">
+        <div class="mockup-card-title">E.C.H.O.</div>
+      </div>
+      <div class="mockup-card side side-right" style="background: linear-gradient(135deg, #2e2a0a, #3e3a1a);">
+        <div class="mockup-card-title" style="font-size: 12px;">Prometheus</div>
+      </div>
+    </div>
+
+    <div class="mockup-work-cats">
+      <div class="mockup-work-cat-title">What are you looking for?</div>
+      <div class="mockup-work-cat-link">-> Websites</div>
+      <div class="mockup-work-cat-link">-> Installations</div>
+      <div class="mockup-work-cat-link">-> XR / VR / AI</div>
+      <div class="mockup-work-cat-link">-> Multiplayer</div>
+      <div class="mockup-work-cat-link">-> Games</div>
+      <div class="mockup-work-input">Ask me anything...</div>
+    </div>
+  </div>
+</div>
+
+<!-- BORDER RADIUS -->
+<div class="section">
+  <div class="section-title">Border Radius Scale</div>
+  <div style="display: flex; gap: 24px; align-items: flex-end;">
+    <div style="text-align: center;">
+      <div style="width: 200px; height: 48px; border-radius: 40px; background: var(--frosted-bg); border: 1px solid var(--frosted-border); margin-bottom: 8px;"></div>
+      <div style="font-size: 8px; font-weight: 300; letter-spacing: 1px; color: var(--text-subtle);">Pill — 40px</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="width: 200px; height: 42px; border-radius: 30px; background: rgba(255,255,255,0.05); border: 1px solid var(--input-border); margin-bottom: 8px;"></div>
+      <div style="font-size: 8px; font-weight: 300; letter-spacing: 1px; color: var(--text-subtle);">Input — 30px</div>
+    </div>
+    <div style="text-align: center;">
+      <div style="width: 200px; height: 120px; border-radius: 20px; background: linear-gradient(135deg, #1a1a2e, #16213e); margin-bottom: 8px;"></div>
+      <div style="font-size: 8px; font-weight: 300; letter-spacing: 1px; color: var(--text-subtle);">Card — 20px</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
